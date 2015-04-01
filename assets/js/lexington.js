@@ -1,131 +1,57 @@
 var map;
 var geocoder;
-var councilLayer;
-var elemLayer;
-var middleLayer;
-var highLayer;
-var magistrateLayer;
-var houseLayer;
-var senateLayer;
-var schoolBoardLayer;
-var votingLayer;
-var neighborhoodAssocLayer;
-var postOfficeLayer;
-var fireStationLayer;
-var libraryLayer;
-var hospitalLayer;
+
 var countyLayer;
-var postMarker;
-var fireMarker;
-var libraryMarker;
-var hospitalMarker;
+
 var lookupMarker;
+var layers = [];
+var markerLayers = [];
 
 var initVariables = function(){
+    // change accessToken to your Mapbox token
+    // see: https://www.mapbox.com/account/apps/
     L.mapbox.accessToken = 'pk.eyJ1IjoiYmxha2VzaGFsbCIsImEiOiJRSkN3Y3prIn0.MfDnpigJE6CVbEsV0xwLfA';
-    map;
     geocoder = L.mapbox.geocoder('mapbox.places');
-    councilLayer = L.mapbox.featureLayer();
-    elemLayer = L.mapbox.featureLayer();
-    middleLayer = L.mapbox.featureLayer();
-    highLayer = L.mapbox.featureLayer();
-    magistrateLayer = L.mapbox.featureLayer();
-    houseLayer = L.mapbox.featureLayer();
-    senateLayer = L.mapbox.featureLayer();
-    schoolBoardLayer = L.mapbox.featureLayer();
-    votingLayer = L.mapbox.featureLayer();
-    neighborhoodAssocLayer = L.mapbox.featureLayer();
-    postOfficeLayer = L.mapbox.featureLayer();
-    fireStationLayer = L.mapbox.featureLayer();
-    libraryLayer = L.mapbox.featureLayer();
-    hospitalLayer = L.mapbox.featureLayer();
     countyLayer = L.mapbox.featureLayer();
-    postMarker = L.mapbox.featureLayer();
-    fireMarker = L.mapbox.featureLayer();
-    libraryMarker = L.mapbox.featureLayer();
-    hospitalMarker = L.mapbox.featureLayer();
+    countyLayer.loadURL('assets/data/county.geojson')
+    markerLayers.push(new WhatsMyDistrict.PointLayer('assets/data/post-office.geojson', {color: '#63b6e5', icon: 'post', size: 'small'}))
+    markerLayers.push(new WhatsMyDistrict.PointLayer('assets/data/fire-station.geojson', {color: '#FF0000', icon: 'fire-station' , size: 'small'}))
+    markerLayers.push(new WhatsMyDistrict.PointLayer('assets/data/library.geojson', {color: '#57FF65', icon: 'library' , size: 'small'}))
+    markerLayers.push(new WhatsMyDistrict.PointLayer('assets/data/hospital.geojson', {color: '#FFFFFF', icon: 'hospital' , size: 'small'}))
+
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/council.geojson', '#council-template', '#council-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/elem.geojson', '#elem-template', '#elem-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/middle.geojson', '#middle-template', '#middle-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/high.geojson', '#high-template', '#high-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/magistrate.geojson', '#magistrate-template', '#magistrate-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/house.geojson', '#house-template', '#house-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/senate.geojson', '#senate-template', '#senate-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/school-board.geojson', '#school-board-template', '#school-board-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/voting.geojson', '#voting-template', '#voting-results'))
     lookupMarker = L.marker([0, 0], {
     	"marker-color": "#3bb20"
     });
 }
 
-var loadData = function(){
-    councilLayer.loadURL('assets/data/council.geojson');
-  //   .on('ready', function(data){
-  //   	councilLayer.eachLayer(function(layer) {
-		// 	layer.bindPopup('District: <strong>' + layer.feature.properties.DISTRICT + '</strong>', { closeButton: false});
-		// });
-  //   })
-    elemLayer.loadURL('assets/data/elem.geojson');
-    middleLayer.loadURL('assets/data/middle.geojson');
-    highLayer.loadURL('assets/data/high.geojson');
-    magistrateLayer.loadURL('assets/data/magistrate.geojson');
-    houseLayer.loadURL('assets/data/house.geojson');
-    senateLayer.loadURL('assets/data/senate.geojson');
-    schoolBoardLayer.loadURL('assets/data/school-board.geojson');
-    votingLayer.loadURL('assets/data/voting.geojson');
-    postOfficeLayer.loadURL('assets/data/post-office.geojson');
-    fireStationLayer.loadURL('assets/data/fire-station.geojson');
-    libraryLayer.loadURL('assets/data/library.geojson');
-    hospitalLayer.loadURL('assets/data/hospital.geojson');
-    neighborhoodAssocLayer.loadURL('assets/data/neighborhood-assoc.geojson');
-    countyLayer.loadURL('assets/data/county.geojson');
-
-}
-
 var findDistricts = function(point) {
-    var postOffice = findNearest(postOfficeLayer, point)
-    var fireStation = findNearest(fireStationLayer, point);
-    var library = findNearest(libraryLayer, point);
-    var hospital = findNearest(hospitalLayer, point);
-    setMarker(map, postOffice, postMarker, {
-        color: '#63b6e5',
-        icon: 'post',
-        size: 'small',
-        title: postOffice.properties.NAME,
-        description: postOffice.properties.ADDRESS
-    });
-    setMarker(map, fireStation, fireMarker, {
-        color: '#FF0000',
-        icon: 'fire-station',
-        size: 'small',
-        title: fireStation.properties.MORE,
-        description: fireStation.properties.ADDRESS
-    });
-    setMarker(map, library, libraryMarker,{
-      color: '#57FF65',
-      icon: 'library',
-      size: 'small',
-      title: library.properties.NAME,
-      description: library.properties.ADDRESS
-    });
-    setMarker(map, hospital, hospitalMarker,{
-        color: '#FFFFFF',
-        icon: 'hospital',
-        size: 'small',
-        title: hospital.properties.NAME,
-        description: hospital.properties.ADDRESS
-    });
-    setTemplate(findDistrict(point, councilLayer), '#council-template', '#council-results');
-    setTemplate(findDistrict(point, elemLayer), '#elem-template', '#elem-results');
-    setTemplate(findDistrict(point, middleLayer), '#middle-template', '#middle-results');
-    setTemplate(findDistrict(point, highLayer), '#high-template', '#high-results');
-    setTemplate(findDistrict(point, houseLayer), '#house-template', '#house-results');
-    setTemplate(findDistrict(point, senateLayer), '#senate-template', '#senate-results');
-    setTemplate(findDistrict(point, schoolBoardLayer), '#school-board-template', '#school-board-results');
-    setTemplate(findDistrict(point, votingLayer), '#voting-template', '#voting-results');
-    setTemplate(findDistrict(point, magistrateLayer), '#magistrate-template', '#magistrate-results');
-    // setTemplate(findDistrict(point, neighborhoodAssocLayer), '#neighborhood-assoc-template', '#neighborhood-assoc-results');
+    markerLayers.forEach(function(marker){
+        marker.setMarker(map, marker.findNearest(point))
+    })
+
+    layers.forEach(function(layer){
+        layer.setTemplate(layer.findDistrict(point))
+    })
     lookupMarker.setLatLng([point.geometry.coordinates[1], point.geometry.coordinates[0]]);
-    lookupMarker.setOpacity(1);
-    $('.temp').hide();
+    lookupMarker.setOpacity(1)
+     $('.temp').hide();
+    // setLayerListeners();
 };
 
 var addressLookup = function(query) {
     geocoder.query(query, function(err, data){
         if (data.latlng) {
             map.setView([data.latlng[0], data.latlng[1]], 13);
-            var point = getPoint(data.latlng[0], data.latlng[1]);
+            var point = WhatsMyDistrict.getPoint(data.latlng[0], data.latlng[1]);
             findDistricts(point);
         }
     });
@@ -159,6 +85,22 @@ var setAddress = function(address) {
   $('#search-address').val(address);
 };
 
+var clearLayers = function() {
+    if(map.hasLayer(countyLayer)){
+        map.removeLayer(countyLayer);
+    }
+    layers.forEach(function(layer){
+        if(map.hasLayer(this.featureLayer)){
+            map.removeLayer(this.featureLayer);
+        }
+    });
+};
+
+var reset = function(){
+    clearLayers();
+    countyLayer.addTo(map);
+}
+
 $(document).ready(function(){
     setAddress(readCookie("query"));
     initVariables();
@@ -168,31 +110,26 @@ $(document).ready(function(){
 
     lookupMarker.setOpacity(0)
     lookupMarker.addTo(map);
-    loadData();
     countyLayer.addTo(map);
-
-    countyLayer.on('click', function(e) {
-        var point = getPoint(e.latlng.lat, e.latlng.lng);
+    countyLayer.on('click', function(e){
+        var point = WhatsMyDistrict.getPoint(e.latlng.lat, e.latlng.lng);
         findDistricts(point);
-
+    })
+    layers.forEach(function(layer){
+        layer.featureLayer.on('click', function(e){
+            var point = WhatsMyDistrict.getPoint(e.latlng.lat, e.latlng.lng);
+            findDistricts(point);
+        });
     });
+    markerLayers.forEach(function(marker){
+        marker.markerLayer.on('mouseover', function(e){
+            e.layer.openPopup();
+        })
+    })
     $('#search').on('click', function(e){
         e.preventDefault();
         var address = $('#search-address').val()
         createCookie("query", address);
         addressLookup(address + ' Lexington , KY');
-    });
-
-    postMarker.on('mouseover', function(e){
-        e.layer.openPopup();
-    });
-    fireMarker.on('mouseover', function(e){
-        e.layer.openPopup();
-    });
-    libraryMarker.on('mouseover', function(e){
-        e.layer.openPopup();
-    });
-    hospitalMarker.on('mouseover', function(e){
-        e.layer.openPopup();
     });
 })
