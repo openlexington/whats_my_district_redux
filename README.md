@@ -2,18 +2,17 @@
 
 ## What is this?
 
-[What's My District?](http://www.whatsmydistrict.org) started off as a National
+[What's My District?](http://www.whatsmydistrict.org) started off as a 2013 National
 Day of Civic Hacking project. It essentially allows anyone in Lexington, KY to
 input their address and find out all the different districts they are in,
-including schools, council districts, magistrate districts, and etc.
+including schools, council districts, magistrate districts, etc.
 
 
 It was a Sinatra app using convoluted PostGIS queries and a pain to deploy.
-With Mapbox releasing Turf.js I decided to remake What's My District. This
-is the tentative results. All client side, all static files, and can be
+With Mapbox releasing Turf.js, I, @blakeshall, decided to remake What's My District. This
+is the results. All client side, all static files, and can be
 deployed on GitHub. I'm even adding finding and showing the nearest
 hospital, library, post office, and fire station.
-
 
 The end goal is to break the abstract logic into a small
 library with all city/county specific stuff in a lexington.js file. This
@@ -57,3 +56,9 @@ Use [gdal](http://www.gdal.org/)'s ogre to convert .shp format to .geojson forma
 
 - There's a [nice writeup](http://ben.balter.com/2013/06/26/how-to-convert-shapefiles-to-geojson-for-use-on-github/) by Ben Balter on how to do this on your mac.
 - Or there this [Ogre web client](http://ogre.adc4gis.com/).
+
+It's possible that the zip file is also the .shp file or can be treated as such.
+
+## Contributing
+
+Pull requests welcome! Please see our [contribution guide](CONTRIBUTING.md).
