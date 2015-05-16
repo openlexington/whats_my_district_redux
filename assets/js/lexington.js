@@ -28,6 +28,7 @@ var initVariables = function(){
     layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/senate.geojson', '#senate-template', '#senate-results'))
     layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/school-board.geojson', '#school-board-template', '#school-board-results'))
     layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/voting.geojson', '#voting-template', '#voting-results'))
+    layers.push(new WhatsMyDistrict.DistrictLayer('assets/data/solid-waste-quad.geojson', '#solid-waste-template', '#solid-waste-results'))
     lookupMarker = L.marker([0, 0], {
     	"marker-color": "#3bb20"
     });
