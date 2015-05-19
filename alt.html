@@ -67,6 +67,7 @@
 				<div id='council-results'></div>
 				<div id='magistrate-results'></div>
 				<div id='voting-results'></div>
+				<div id='solid-waste-results' class='text-left'></div>
 				<h2>School</h2>
 				<div id='elem-results'></div>
 				<div id='middle-results'></div>
@@ -142,6 +143,12 @@
 	  	<li>School Board District: {{District}}</li>
 	  	<li>Rep: {{Rep}}</li>
 	  </ul>
+	</script>
+
+	<script id="solid-waste-template" type="text/x-handlebars-template">
+		<ul class='list-unstyled'>
+			<li><strong>Solid Waste Pickup:</strong> {{DAY}}</li>
+		</ul>
 	</script>
 
 </body>
