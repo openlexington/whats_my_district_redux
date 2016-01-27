@@ -45,7 +45,7 @@ After merging pull-request into master,
 
 ## How to update geospatial data
 
-1. Download dataset from [Lexington's Open Data Catalog](http://data.lexingtonky.gov)
+1. Download dataset(s) from [Lexington's Open Data Catalog](http://data.lexingtonky.gov)
 1. Extract .zip file
 1. Convert .shp to .geojson
 1. Add / replace geojson in `assets/data`
