@@ -45,7 +45,7 @@ After merging pull-request into master,
 
 ## How to update geospatial data
 
-1. Download dataset from [Lexington's Open Data Catalog](http://data.lexingtonky.gov)
+1. Download dataset(s) from [Lexington's Open Data Catalog](http://data.lexingtonky.gov)
 1. Extract .zip file
 1. Convert .shp to .geojson
 1. Add / replace geojson in `assets/data`
@@ -53,6 +53,8 @@ After merging pull-request into master,
 ### Converting .shp to .geojson
 
 Use [gdal](http://www.gdal.org/)'s ogre to convert .shp format to .geojson format.
+
+e.g. `ogr2ogr -f GeoJSON -t_srs crs:84 voting.geojson VotingPrecinct.shp`
 
 - There's a [nice writeup](http://ben.balter.com/2013/06/26/how-to-convert-shapefiles-to-geojson-for-use-on-github/) by Ben Balter on how to do this on your mac.
 - Or there this [Ogre web client](http://ogre.adc4gis.com/).
