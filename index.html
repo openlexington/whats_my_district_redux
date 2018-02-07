@@ -117,15 +117,15 @@
 
 	<script id="house-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>State House District:</strong> {{District}}</li>
+	  	<li><strong>State House District:</strong> {{LEGISLATIV}}</li>
 	  	<li><strong>Rep:</strong> {{titleCase LEGREP}}</li>
 	  </ul>
 	</script>
 
 	<script id="senate-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>State Senate District:</strong> {{District}}</li>
-	  	<li><strong>Rep:</strong> {{titleCase Rep}}</li>
+	  	<li><strong>State Senate District:</strong> {{SENATORIAL}}</li>
+	  	<li><strong>Rep:</strong> {{titleCase SENREP}}</li>
 	  </ul>
 	</script>
 
@@ -177,8 +177,8 @@
 
 	<script id="magistrate-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>Magistrate District:</strong> {{District}}</li>
-	  	<li><strong>Rep:</strong> {{titleCase Rep}}</li>
+	  	<li><strong>Magistrate District:</strong> {{MAGISTERIA}}</li>
+	  	<li><strong>Rep:</strong> {{titleCase MAGREP}}</li>
 	  </ul>
 	</script>
 
@@ -190,26 +190,26 @@
 
 	<script id="elem-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>Elementary School:</strong> {{Name}}</li>
+	  	<li><strong>Elementary School:</strong> {{AREA_NAME}}</li>
 	  </ul>
 	</script>
 
 	<script id="middle-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>Middle School:</strong> {{SName}}</li>
+	  	<li><strong>Middle School:</strong> {{AREA_NAME}}</li>
 	  </ul>
 	</script>
 
 	<script id="high-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>High School:</strong> {{SName}}</li>
+	  	<li><strong>High School:</strong> {{AREA_NAME}}</li>
 	  </ul>
 	</script>
 
 	<script id="school-board-template" type="text/x-handlebars-template">
 	  <ul class='list-unstyled'>
-	  	<li><strong>School Board District:</strong> {{District}}</li>
-	  	<li><strong>Rep:</strong> {{titleCase Rep}}</li>
+	  	<li><strong>School Board District:</strong> {{SCHOOL}}</li>
+	  	<li><strong>Rep:</strong> {{titleCase SCHREP}}</li>
 	  </ul>
 	</script>
 
